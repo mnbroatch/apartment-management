@@ -1,0 +1,58 @@
+<table class="table">
+	<thead>
+		<th>Item Name</th>
+	</thead>
+	<colgroup>
+		<col style="width:80%">
+		<col style="width:20%">
+	</colgroup>  
+
+	<tr ng-repeat='item in itemArray track by $index'>
+
+		<td ng-show="!editing">
+			{{item.name}}
+		</td>
+		<td ng-show="!editing" class="buttons-cell">
+			<button class="edit-button btn btn-primary" ng-click="editItem = item;editing = true">
+				<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+			</button>
+			<button class="delete-button btn btn-danger " ng-click="removeOneItem(item)">
+				<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+			</button>
+		</td>
+
+
+		<td ng-show="editing">
+			<input type="text" ng-model="editItem.name">
+		</td>
+		<td ng-show="editing" class="buttons-cell">
+			<button class="save-button btn btn-success" ng-click="editing = false;editOneItem(editItem,item);">
+				<span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+			</button>
+			<button class="cancel-button btn btn-danger" ng-click="editing = false">
+				<span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+			</button>
+		</td>
+
+	</tr>
+
+</table>
+
+
+
+
+
+
+
+
+<!-- <!&#45;&#45; Why does ngIf not work, but ngShow does when repeat is on same line? &#45;&#45;> -->
+<!-- <tr ng&#45;repeat='item in itemArray track by $index' ng&#45;if="!editing"> -->
+	<!-- 	<td>{{item.name}}</td> -->
+	<!-- 	<td class="buttons&#45;cell"> -->
+		<!-- 		<button class="hide&#45;button btn btn&#45;primary" ng&#45;click="editing = true"> -->
+			<!-- 			<span class="glyphicon glyphicon&#45;leaf" aria&#45;hidden="true"></span> -->
+			<!-- 		</button> -->
+		<!-- 	</td> -->
+	<!-- </tr> -->
+
+
