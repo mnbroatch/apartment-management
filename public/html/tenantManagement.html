@@ -1,0 +1,46 @@
+<h1>Tenant Management</h1>
+
+<div class="row">
+	<div class="col-sm-6">
+
+		<form ng-submit='addOneTenant(newTenant)'>
+			<div class="form-group">
+				<label>Tenant Name</label>
+				<input class="form-control" type="text" placeholder="Name of Tenant" ng-model='newTenant.name' required>
+			</div>
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+
+	</div>
+</div>
+
+
+<div class="table-container">
+	<table class="table">
+		<thead>
+			<th>Tenant Name</th>
+		</thead>
+		<colgroup>
+			<col style="width:29%">
+			<col style="width:29%">
+			<col style="width:29%">
+			<col style="width:13%">
+		</colgroup>  
+
+		<tr ng-repeat="tenant in tenantArray track by $index">
+
+			<td>
+				<a href="#" editable-text="tenant.name" onbeforesave="editOneTenant(tenant)" e-required>{{ tenant.name ||'empty' }}</a>
+			</td>
+
+			<td>
+				<button class="delete-button btn btn-danger " ng-click="removeOneTenant(tenant)">
+					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+				</button>
+			</td>
+		</tr>
+
+
+	</tr>
+
+</table>

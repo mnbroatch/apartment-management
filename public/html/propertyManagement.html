@@ -1,0 +1,63 @@
+<h1>Property Management</h1>
+
+<div class="row">
+	<div class="col-sm-6">
+
+		<form ng-submit='addOneProperty(newProperty)'>
+			<div class="form-group">
+				<label>Property Name</label>
+				<input class="form-control" type="text" placeholder="Name of Property" ng-model='newProperty.name' required>
+			</div>
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+
+	</div>
+</div>
+
+
+<div class="table-container">
+	<table class="table">
+		<thead>
+			<th>Property Name</th>
+			<th>Rent</th>
+			<th>Maximum Tenants</th>
+		</thead>
+		<colgroup>
+			<col style="width:29%">
+			<col style="width:29%">
+			<col style="width:29%">
+			<col style="width:13%">
+		</colgroup>  
+
+		<tr ng-repeat="property in propertyArray track by $index">
+
+			<td>
+				<a href="#" editable-text="property.name" onbeforesave="editOneProperty(property)" e-required>{{ property.name ||'empty' }}</a>
+			</td>
+
+			<td>
+				<a href="#" editable-text="property.rent" onbeforesave="editOneProperty(property)" e-required>{{ property.name ||'empty' }}</a>
+			</td>
+
+			<td>
+				<a href="#" editable-text="property.maxTenants" onbeforesave="editOneProperty(property)" e-required>{{ property.name ||'empty' }}</a>
+			</td>
+
+
+			<td>
+
+				<button class="show-button btn btn-danger " ui-sref="propertyShow(property)">
+					<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+				</button>
+
+				<button class="delete-button btn btn-danger " ng-click="removeOneProperty(property)">
+					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+				</button>
+
+			</td>
+		</tr>
+
+
+	</tr>
+
+</table>

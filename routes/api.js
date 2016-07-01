@@ -4,7 +4,8 @@ const express = require('express');
 
 let router = express.Router();
 
-router.use('/items', require('./items'));
+router.use('/tenants', require('./tenants'));
+router.use('/properties', require('./properties'));
 
 module.exports = router;
 

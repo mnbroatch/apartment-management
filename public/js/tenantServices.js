@@ -1,13 +1,13 @@
 "use strict;"
 
 angular.module('appName')
-.service('itemService', function($http){
+.service('tenantService', function($http){
 
 
 	this.getAll = () => {
 		return $http({
 			method:'GET',
-			url: '/api/items'
+			url: '/api/tenants'
 		})
 		.then( res => {
 			if (res.data.length)
@@ -18,11 +18,11 @@ angular.module('appName')
 		});
 	}
 
-	this.addOne = (item) => {
+	this.addOne = (tenant) => {
 		return $http({
 			method:'POST',
-			url: '/api/items',
-			data: item
+			url: '/api/tenants',
+			data: tenant
 		})
 		.then( res => {
 			if (res.data){
@@ -32,18 +32,18 @@ angular.module('appName')
 		.catch(err => {console.log('err: ', err)});
 	}
 
-	this.removeOne = (item) => {
+	this.removeOne = (tenant) => {
 		return $http({
 			method:'DELETE',
-			url: '/api/items/' + item._id
+			url: '/api/tenants/' + tenant._id
 		});
 	}
 
-	this.editOne = (item) => {
+	this.editOne = (tenant) => {
 		return $http({
 			method:'PUT',
-			url: '/api/items/' + item._id,
-			data: item
+			url: '/api/tenants/' + tenant._id,
+			data: tenant
 		})
 		.then( res => {
 			if (res.data){
@@ -52,6 +52,21 @@ angular.module('appName')
 		})
 		.catch(err => {console.log('err: ', err)});
 	}
+
+	this.addProperty = () => {
+		return $http({
+			method:'PUT',
+			url: '/api/tenants/:tenantId/add-property/:propertyId',
+			data: {property: propertyId}
+		})
+		.then( res => {
+			if (res.data){
+				return res.data;
+			}
+		})
+		.catch(err => {console.log('err: ', err)});
+	}
+
 
 
 });

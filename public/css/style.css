@@ -3,5 +3,9 @@
 }
 
 .table-container {
-	margin-top:50px;
+	margin-top:40px;
+}
+
+td {
+	vertical-align:middle!important;
 }
