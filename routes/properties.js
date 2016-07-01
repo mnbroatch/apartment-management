@@ -7,16 +7,29 @@ let Tenant = require('../models/tenant');
 let router = express.Router();
 
 
+console.log(Property.removeTenantFromProperty);
 
 
 router.route('/')
 .get(function(req,res){
-	Property.find({}, (err,properties) => {
+	Property.find({})
+	.populate('tenants')
+	.exec( (err,properties) => {
+		console.log(properties);
 		res.status(err? 400:200).send(err || properties);
 	});
 })
+
+
+
+
+
+
+
+
 .post(function(req,res){
 	let property = new Property(req.body);
+	console.log('here');
 	property.save((err,savedProperty) => {
 		res.status(err? 400:200).send(err || savedProperty);
 	});
@@ -35,69 +48,29 @@ router.route('/:id')
 	});
 })
 .delete(function(req,res){
-	Property.findByIdAndRemove(req.params.id, err => {
-		res.status(err? 400:200).send(err);
-	});
+	console.log(req);
+	Tenant.update({_id: {$in: req.body.tenants}}, {property:null}, {multi:true})
+	.then(function(){
+		return Property.findByIdAndRemove(req.params.id, err=>{
+			res.status(err? 400:200).send(err);
+		});
+	})
 });
 
 
 
-// promise practice got a little messy :(
-
 router.route('/:propertyId/add-tenant/:tenantId')
 .put(function(req,res){
-
-	let propertyPromise = Property.findById(req.params.propertyId)
-	.exec()
-
-	let tenantPromise = Tenant.findByIdAndUpdate(req.params.tenantId,{property: req.params.propertyId}, {new:true})
-	.exec()
-
-	Promise.all([propertyPromise,tenantPromise])
-	.then(function(propertyAndTenant){
-		if (propertyAndTenant[0].tenants.length >= propertyAndTenant[0].maxTenants){
-			return Promise.reject('Max Tenants Exceeded. Tenant not added.');
-		}
-		else {
-			propertyAndTenant[0].tenants.push(propertyAndTenant[1]._id);
-			return propertyAndTenant[0].save()
-			.then(function(){
-				return propertyAndTenant;
-			});
-		}
-	})
-	.then(function(propertyAndTenant){
-		return res.send(propertyAndTenant);
-	})
-	.catch(function(err){
-		res.send(err);
+	Property.addTenantToProperty(req.params.propertyId,req.params.tenantId, function(err,savedProperty){
+		res.status(err? 400:200).send(err || savedProperty);
 	});
 });
 
 
 router.route('/:propertyId/remove-tenant/:tenantId')
 .put(function(req,res){
-
-	let tenantPromise = Tenant.findById(req.params.tenantId)
-	.exec()
-
-	let propertyPromise = Property.findByIdAndUpdate(req.params.propertyId,{$pull: {tenants: req.params.tenantId}}, {new:true})
-	.exec()
-
-	Promise.all([propertyPromise,tenantPromise])
-	.then(function(propertyAndTenant){
-
-		propertyAndTenant[1].property = null;
-		return propertyAndTenant[1].save()
-		.then(function(){
-			return propertyAndTenant;
-		});
-	})
-	.then(function(propertyAndTenant){
-		return res.send(propertyAndTenant);
-	})
-	.catch(function(err){
-		res.send(err);
+	Property.removeTenantFromProperty(req.params.propertyId,req.params.tenantId, function(err,savedProperty){
+		res.status(err? 400:200).send(err || savedProperty);
 	});
 });
 

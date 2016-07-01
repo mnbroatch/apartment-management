@@ -4,11 +4,23 @@
 	<div class="col-sm-6">
 
 		<form ng-submit='addOneProperty(newProperty)'>
+
 			<div class="form-group">
 				<label>Property Name</label>
 				<input class="form-control" type="text" placeholder="Name of Property" ng-model='newProperty.name' required>
 			</div>
-			<button type="submit" class="btn btn-primary">Submit</button>
+
+			<div class="form-group">
+				<label>Rent</label>
+				<input class="form-control" type="number" placeholder="Rent Amount" ng-model='newProperty.rent' required>
+			</div>
+
+			<div class="form-group">
+				<label>Maximum Tenants</label>
+				<input class="form-control" type="number" placeholder="Maximum Number of Tenants" ng-model='newProperty.maxTenants' required>
+			</div>
+
+			<button type="submit" class="btn btn-primary">New Property</button>
 		</form>
 
 	</div>
@@ -36,11 +48,11 @@
 			</td>
 
 			<td>
-				<a href="#" editable-text="property.rent" onbeforesave="editOneProperty(property)" e-required>{{ property.name ||'empty' }}</a>
+				<a href="#" editable-text="property.rent" onbeforesave="editOneProperty(property)" e-required>{{ property.rent ||'empty' }}</a>
 			</td>
 
 			<td>
-				<a href="#" editable-text="property.maxTenants" onbeforesave="editOneProperty(property)" e-required>{{ property.name ||'empty' }}</a>
+				<a href="#" editable-text="property.maxTenants" onbeforesave="editOneProperty(property)" e-required>{{ property.maxTenants ||'empty' }}</a>
 			</td>
 
 

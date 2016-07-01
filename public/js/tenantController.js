@@ -4,17 +4,7 @@ angular.module('appName')
 .controller('tenantController', function($scope,$http,tenantService) {
 
 
-	{
-		$scope.tenantArray =[];
-
-		tenantService.getAll()
-		.then( function(tenants){
-			if(tenants) $scope.tenantArray.push(...tenants);
-		})
-		.catch( err => {
-			console.log(err);
-		});
-	}
+	
 
 
 

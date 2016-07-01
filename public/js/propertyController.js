@@ -3,22 +3,6 @@
 angular.module('appName')
 .controller('propertyController', function($scope,$http,propertyService) {
 
-
-	{
-		$scope.propertyArray =[];
-
-		propertyService.getAll()
-		.then( function(properties){
-			if(properties) $scope.propertyArray.push(...properties);
-			console.log($scope.propertyArray);
-		})
-		.catch( err => {
-			console.log(err);
-		});
-	}
-
-
-
 	$scope.addOneProperty = function(property){
 		propertyService.addOne(property)
 		.then( function(newProperty){
@@ -52,6 +36,4 @@ angular.module('appName')
 
 
 });
-
-
 

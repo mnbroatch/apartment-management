@@ -4,11 +4,23 @@
 	<div class="col-sm-6">
 
 		<form ng-submit='addOneTenant(newTenant)'>
+
 			<div class="form-group">
 				<label>Tenant Name</label>
 				<input class="form-control" type="text" placeholder="Name of Tenant" ng-model='newTenant.name' required>
 			</div>
-			<button type="submit" class="btn btn-primary">Submit</button>
+			
+			<div class="form-group">
+				<label>Email Address</label>
+				<input class="form-control" type="email" placeholder="someone@something.something" ng-model='newTenant.email' required>
+			</div>
+			
+			<div class="form-group">
+				<label>Phone Number</label>
+				<input class="form-control" type="tel" placeholder="Phone Number" ng-model='newTenant.phone' required>
+			</div>
+			
+			<button type="submit" class="btn btn-primary">New Tenant</button>
 		</form>
 
 	</div>
@@ -19,6 +31,8 @@
 	<table class="table">
 		<thead>
 			<th>Tenant Name</th>
+			<th>Email Address</th>
+			<th>Phone Number</th>
 		</thead>
 		<colgroup>
 			<col style="width:29%">
@@ -31,6 +45,14 @@
 
 			<td>
 				<a href="#" editable-text="tenant.name" onbeforesave="editOneTenant(tenant)" e-required>{{ tenant.name ||'empty' }}</a>
+			</td>
+
+			<td>
+				<a href="#" editable-text="tenant.email" onbeforesave="editOneTenant(tenant)" e-required>{{ tenant.email ||'empty' }}</a>
+			</td>
+
+			<td>
+				<a href="#" editable-text="tenant.phone" onbeforesave="editOneTenant(tenant)" e-required>{{ tenant.phone ||'empty' }}</a>
 			</td>
 
 			<td>

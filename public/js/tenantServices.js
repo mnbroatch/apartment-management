@@ -35,7 +35,9 @@ angular.module('appName')
 	this.removeOne = (tenant) => {
 		return $http({
 			method:'DELETE',
-			url: '/api/tenants/' + tenant._id
+			url: '/api/tenants/' + tenant._id,
+			data: tenant,
+			headers: {"Content-Type": "application/json;charset=utf-8"}
 		});
 	}
 

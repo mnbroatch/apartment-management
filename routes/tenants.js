@@ -3,6 +3,7 @@
 
 let express = require('express');
 let Tenant = require('../models/tenant');
+let Property = require('../models/property');
 
 let router = express.Router();
 
@@ -33,28 +34,16 @@ router.route('/:id')
 	});
 })
 .delete(function(req,res){
-	Tenant.findByIdAndRemove(req.params.id, err => {
+	Property.update({_id: req.body.property},{$pull:{tenant: req.params.id}})
+	.then(function(){
+		return Tenant.findByIdAndRemove(req.params.id, err=>{
+			res.status(err? 400:200).send(err);
+		});
+	})
+	.catch(function(err){
 		res.status(err? 400:200).send(err);
 	});
 });
 
-// router.route('/:tenantId/add-property')
-// .put(function(req,res){
-//
-// 	Tenant.findByIdAndUpdate(req.params.tenantId, {property: req.body.id}, (err,savedTenant) => {
-// 		res.status(err? 400:200).send(err || savedTenant);
-// 	});
-//
-// });
-//
-// router.route('/:tenantId/remove-property')
-// .put(function(req,res){
-//
-// 	Tenant.findByIdAndUpdate(req.params.tenantId, {$pull: {property: req.body.id}}, (err,removedTenant) => {
-// 		res.status(err? 400:200).send(err || removedTenant);
-// 	});
-//
-// });
-
- module.exports = router;
+module.exports = router;
 

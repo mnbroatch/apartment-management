@@ -35,8 +35,10 @@ angular.module('appName')
 	this.removeOne = (property) => {
 		return $http({
 			method:'DELETE',
-			url: '/api/properties/' + property._id
-		});
+			url: '/api/properties/' + property._id,
+			data: property,
+			headers: {"Content-Type": "application/json;charset=utf-8"}
+		})
 	}
 
 	this.editOne = (property) => {
